@@ -46,7 +46,7 @@ services:
       start_period: 40s
 
   db:
-    image: ${MYSQL_IMAGE:-registry.cn-hangzhou.aliyuncs.com/library/mysql:8.0}
+    image: ${MYSQL_IMAGE:-docker.m.daocloud.io/library/mysql:8.0}
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
