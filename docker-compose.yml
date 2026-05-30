@@ -1,7 +1,14 @@
+x-logging: &default-logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "5"
+
 services:
   nginx:
     image: ${NGINX_IMAGE:-nginx:1.27-alpine}
     restart: unless-stopped
+    logging: *default-logging
     ports:
       - "80:80"
       - "443:443"
@@ -9,6 +16,7 @@ services:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./nginx/conf.d:/etc/nginx/conf.d:ro
       - ./nginx/certs:/etc/nginx/certs:ro
+      - ./nginx/pki-validation:/etc/nginx/pki-validation:ro
     depends_on:
       frontend:
         condition: service_started
@@ -18,12 +26,14 @@ services:
   frontend:
     image: ${FRONTEND_IMAGE}
     restart: unless-stopped
+    logging: *default-logging
     expose:
       - "80"
 
   backend:
     image: ${BACKEND_IMAGE}
     restart: unless-stopped
+    logging: *default-logging
     expose:
       - "8000"
     volumes:
@@ -48,6 +58,7 @@ services:
   db:
     image: ${MYSQL_IMAGE:-mysql:8.0}
     restart: unless-stopped
+    logging: *default-logging
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
