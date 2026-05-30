@@ -58,10 +58,11 @@ echo "=== 建置 backend ==="
 podman build -t localhost/mycloset-backend:latest "$SRC_DIR/backend"
 
 echo "=== 建置 frontend ==="
+GOOGLE_CLIENT_ID=$(grep '^client_id=' "$DEPLOY_DIR/configs/secrets.ini" | cut -d= -f2-)
 podman build -t localhost/mycloset-frontend:latest \
   --build-arg BASE_URL=https://api.akikaycloset.vip \
   --build-arg URL_PREFIX= \
-  --build-arg GOOGLE_CLIENT_ID=1099160565455-r2jlmn2i9ontham6nj3bh7jneunb4d7r.apps.googleusercontent.com \
+  --build-arg GOOGLE_CLIENT_ID="$GOOGLE_CLIENT_ID" \
   --build-arg NODE_ENV=production \
   "$SRC_DIR/frontend"
 
