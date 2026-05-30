@@ -1,5 +1,26 @@
+# 密碼與敏感設定
 .env
+.env.*
 configs/secrets.ini
+configs/alembic.ini
+configs/snapshot.env
+configs/snapshot.credentials.env
+env/*.local.env
+
+# TLS 與金鑰
 nginx/certs/*
 !nginx/certs/.gitkeep
-nginx/pki-validation/
+nginx/pki-validation/*
+*.pem
+*.key
+*.pfx
+*.p12
+
+# 存取憑證
+*credentials.env
+.git-credentials
+
+# 映像打包
+*.tar.gz
+backend-image.tar.gz
+frontend-image.tar.gz

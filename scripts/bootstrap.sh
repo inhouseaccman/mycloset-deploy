@@ -20,8 +20,7 @@ else
 fi
 
 sudo mkdir -p "$DEPLOY_DIR/configs" "$DEPLOY_DIR/nginx/certs"
-[ -f "$DEPLOY_DIR/.env" ] || sudo cp "$DEPLOY_DIR/.env.example" "$DEPLOY_DIR/.env"
-[ -f "$DEPLOY_DIR/configs/secrets.ini" ] || sudo cp "$DEPLOY_DIR/configs/secrets.ini.example" "$DEPLOY_DIR/configs/secrets.ini"
+sudo bash "$DEPLOY_DIR/scripts/init-env.sh"
 sudo chown -R deploy:deploy "$DEPLOY_DIR"
 sudo chmod 600 "$DEPLOY_DIR/.env" "$DEPLOY_DIR/configs/secrets.ini"
 

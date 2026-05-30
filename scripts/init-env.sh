@@ -8,6 +8,58 @@ from pathlib import Path
 
 env_path = Path("/opt/deploy/.env")
 secrets_path = Path("/opt/deploy/configs/secrets.ini")
+secrets_path.parent.mkdir(parents=True, exist_ok=True)
+
+DEFAULT_ENV = """FRONTEND_IMAGE=mycloset-frontend:latest
+BACKEND_IMAGE=mycloset-backend:latest
+NGINX_IMAGE=nginx:1.27-alpine
+MYSQL_ROOT_PASSWORD=
+MYSQL_DATABASE=closet_management
+MYSQL_USER=closet
+MYSQL_PASSWORD=
+MYSQL_IMAGE=mysql:8.0
+"""
+
+DEFAULT_SECRETS = """[database]
+dialect=mysql
+driver=pymysql
+user=closet
+password=
+host=db
+port=3306
+database=closet_management
+options=charset=utf8mb4
+
+[session]
+secret=
+
+[csrf]
+secret=
+expiration=300
+algorithm=HS256
+
+[jwt]
+secret=
+
+[google]
+client_id=
+client_secret=
+
+[app]
+prefix=
+cors_origins=https://akikaycloset.vip,https://www.akikaycloset.vip
+
+[upload]
+dir=/opt/deploy/backend/uploads
+allowed_extensions=jpg,jpeg,png,webp,gif,bmp
+max_upload_size=10485760
+url_prefix=/uploads
+"""
+
+if not env_path.exists():
+    env_path.write_text(DEFAULT_ENV)
+if not secrets_path.exists():
+    secrets_path.write_text(DEFAULT_SECRETS)
 
 env_lines = env_path.read_text().splitlines()
 secrets_lines = secrets_path.read_text().splitlines()

@@ -55,13 +55,20 @@ for i in $(seq 1 40); do
 done
 
 echo "=== 建置 backend ==="
-docker build -t mycloset-backend:latest "$SRC_DIR/backend"
+export DEPLOY_ENV=production
+export BUILD_FRONTEND=0
+# shellcheck disable=SC1091
+source "$DEPLOY_DIR/scripts/load-deploy-env.sh"
+docker build -t "$BACKEND_IMAGE" --platform "$PLATFORM" "$SRC_DIR/backend"
 
 echo "=== 建置 frontend ==="
-GOOGLE_CLIENT_ID=$(grep '^client_id=' "$DEPLOY_DIR/configs/secrets.ini" | cut -d= -f2-)
-docker build -t mycloset-frontend:latest \
-  --build-arg BASE_URL=https://api.akikaycloset.vip \
-  --build-arg URL_PREFIX= \
+export BUILD_FRONTEND=1
+# shellcheck disable=SC1091
+source "$DEPLOY_DIR/scripts/load-deploy-env.sh"
+docker build -t "$FRONTEND_IMAGE" \
+  --platform "$PLATFORM" \
+  --build-arg BASE_URL="$BASE_URL" \
+  --build-arg URL_PREFIX="$URL_PREFIX" \
   --build-arg GOOGLE_CLIENT_ID="$GOOGLE_CLIENT_ID" \
   --build-arg NODE_ENV=production \
   "$SRC_DIR/frontend"

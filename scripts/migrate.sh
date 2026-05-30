@@ -20,7 +20,7 @@ password = env.get("MYSQL_PASSWORD", "")
 database = env.get("MYSQL_DATABASE", "closet_management")
 url = f"mysql+pymysql://{user}:{password}@db:3306/{database}?charset=utf8mb4"
 
-template = Path("/opt/deploy/configs/alembic.ini.example")
+template = Path("/opt/deploy/configs/alembic.template.ini")
 
 text = template.read_text()
 text = re.sub(r"^sqlalchemy\.url\s*=.*$", f"sqlalchemy.url = {url}", text, flags=re.M)
