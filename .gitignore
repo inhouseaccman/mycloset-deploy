@@ -2,3 +2,4 @@
 configs/secrets.ini
 nginx/certs/*
 !nginx/certs/.gitkeep
+nginx/pki-validation/
