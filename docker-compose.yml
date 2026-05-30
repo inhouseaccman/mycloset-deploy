@@ -1,6 +1,6 @@
 services:
   nginx:
-    image: ${NGINX_IMAGE:-docker.m.daocloud.io/library/nginx:1.27-alpine}
+    image: ${NGINX_IMAGE:-nginx:1.27-alpine}
     restart: unless-stopped
     ports:
       - "80:80"
@@ -46,7 +46,7 @@ services:
       start_period: 40s
 
   db:
-    image: ${MYSQL_IMAGE:-docker.m.daocloud.io/library/mysql:8.0}
+    image: ${MYSQL_IMAGE:-mysql:8.0}
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
