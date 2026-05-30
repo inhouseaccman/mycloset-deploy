@@ -8,12 +8,15 @@ FRONTEND_REPO=https://github.com/inhouseaccman/mycloset-frontend.git
 COMPOSE="docker compose"
 
 setup_git_auth() {
+  if git config --global --get-regexp '^url\..*\.insteadof$' https://github.com/ >/dev/null 2>&1; then
+    return 0
+  fi
   if [ -f "$HOME/.git-credentials" ]; then
     python3 - <<'PY'
 from pathlib import Path
 import subprocess
 
-cred = Path.home().joinpath(".git-credentials").read_text().strip()
+cred = Path.home().joinpath(".git-credentials").read_text().splitlines()[0].strip()
 base = cred.rstrip("/") + "/"
 subprocess.run(
     ["git", "config", "--global", f"url.{base}.insteadOf", "https://github.com/"],
