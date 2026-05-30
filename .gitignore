@@ -1,0 +1,4 @@
+.env
+configs/secrets.ini
+nginx/certs/*
+!nginx/certs/.gitkeep
