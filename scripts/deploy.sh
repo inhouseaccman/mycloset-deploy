@@ -7,7 +7,24 @@ BACKEND_REPO=https://github.com/inhouseaccman/mycloset-backend.git
 FRONTEND_REPO=https://github.com/inhouseaccman/mycloset-frontend.git
 COMPOSE="docker compose"
 
+setup_git_auth() {
+  if [ -f "$HOME/.git-credentials" ]; then
+    python3 - <<'PY'
+from pathlib import Path
+import subprocess
+
+cred = Path.home().joinpath(".git-credentials").read_text().strip()
+base = cred.rstrip("/") + "/"
+subprocess.run(
+    ["git", "config", "--global", f"url.{base}.insteadOf", "https://github.com/"],
+    check=True,
+)
+PY
+  fi
+}
+
 cd "$DEPLOY_DIR"
+setup_git_auth
 bash "$DEPLOY_DIR/scripts/init-env.sh"
 
 echo "=== clone app repos ==="
