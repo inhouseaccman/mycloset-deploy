@@ -19,7 +19,7 @@ else
   sudo git clone "$DEPLOY_REPO" "$DEPLOY_DIR"
 fi
 
-sudo mkdir -p "$DEPLOY_DIR/configs" "$DEPLOY_DIR/nginx/certs"
+sudo mkdir -p "$DEPLOY_DIR/configs" "$DEPLOY_DIR/nginx/certs" "$DEPLOY_DIR/nginx/pki-validation"
 sudo bash "$DEPLOY_DIR/scripts/init-env.sh"
 sudo chown -R deploy:deploy "$DEPLOY_DIR"
 sudo chmod 600 "$DEPLOY_DIR/.env" "$DEPLOY_DIR/configs/secrets.ini"

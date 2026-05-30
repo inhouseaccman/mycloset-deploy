@@ -11,6 +11,8 @@ env/*.local.env
 nginx/certs/*
 !nginx/certs/.gitkeep
 nginx/pki-validation/*
+!nginx/pki-validation/.gitkeep
+nginx/pki-validation/certum.txt
 *.pem
 *.key
 *.pfx
