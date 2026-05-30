@@ -78,7 +78,7 @@ for i in $(seq 1 40); do
 done
 
 echo "=== 資料庫 migration ==="
-$COMPOSE exec -T backend sh -c "cd /opt/deploy/backend && alembic upgrade head"
+bash "$DEPLOY_DIR/scripts/migrate.sh"
 
 echo "=== 服務狀態 ==="
 $COMPOSE ps
