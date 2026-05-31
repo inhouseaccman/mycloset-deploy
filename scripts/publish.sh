@@ -27,8 +27,10 @@ source "$PROFILE"
 
 BUILD_BACKEND="${BUILD_BACKEND:-1}"
 BUILD_FRONTEND="${BUILD_FRONTEND:-1}"
+BUILD_MANAGEMENT="${BUILD_MANAGEMENT:-1}"
 SYNC_BACKEND="${SYNC_BACKEND:-1}"
 SYNC_FRONTEND="${SYNC_FRONTEND:-1}"
+PRUNE_VPS_IMAGES="${PRUNE_VPS_IMAGES:-1}"
 
 [ -n "${BASE_URL:-}" ] || { echo "BASE_URL required" >&2; exit 1; }
 [ -n "${BUILD_SSH_HOST:-}" ] || { echo "BUILD_SSH_HOST required" >&2; exit 1; }
@@ -39,6 +41,8 @@ SYNC_FRONTEND="${SYNC_FRONTEND:-1}"
 
 # shellcheck disable=SC1090
 source "$SCRIPT_DIR/lib.sh"
+
+[ "$BUILD_MANAGEMENT" != "1" ] || bash "$SCRIPT_DIR/build-management.sh"
 
 export BUILD_BACKEND BUILD_FRONTEND SYNC_BACKEND SYNC_FRONTEND
 export PLATFORM BASE_URL URL_PREFIX GOOGLE_CLIENT_ID
@@ -75,5 +79,7 @@ if [ "$SYNC_BACKEND" = "1" ] || [ "$SYNC_FRONTEND" = "1" ]; then
   [ "$SYNC_FRONTEND" = "1" ] && UP="$UP frontend"
   ssh_vps "$SSH_HOST" "cd $REMOTE_DIR && $UP"
 fi
+
+[ "$PRUNE_VPS_IMAGES" != "1" ] || ssh_vps "$SSH_HOST" "docker image prune -f"
 
 echo PUBLISH_OK
