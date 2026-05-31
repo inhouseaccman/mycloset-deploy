@@ -1,8 +1,6 @@
 #!/bin/bash
 set -euo pipefail
 
-ENV_FILE=/opt/deploy/.env
-SECRETS_FILE=/opt/deploy/configs/secrets.ini
 ALEMBIC_FILE=/opt/deploy/configs/alembic.ini
 
 python3 - <<'PY'
