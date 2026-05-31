@@ -47,7 +47,7 @@ client_secret=
 
 [app]
 prefix=
-cors_origins=https://akikaycloset.vip,https://www.akikaycloset.vip
+cors_origins=https://kayakicloset.vip,https://www.kayakicloset.vip
 
 [upload]
 dir=/opt/deploy/backend/uploads

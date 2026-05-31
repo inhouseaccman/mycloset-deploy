@@ -10,9 +10,6 @@ env/*.local.env
 # TLS 與金鑰
 nginx/certs/*
 !nginx/certs/.gitkeep
-nginx/pki-validation/*
-!nginx/pki-validation/.gitkeep
-nginx/pki-validation/certum.txt
 *.pem
 *.key
 *.pfx
