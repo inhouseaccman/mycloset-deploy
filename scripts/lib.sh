@@ -6,11 +6,7 @@ ROOT_DIR="$(cd "$_DIR/../.." && pwd)"
 SSH_CONFIG_BUILD="${SSH_CONFIG_BUILD:-$ROOT_DIR/.ssh/config}"
 
 ssh_vps() {
-  if [ -n "${SSH_CONFIG_VPS:-}" ]; then
-    ssh -F "$SSH_CONFIG_VPS" -o BatchMode=yes "$@"
-  else
-    ssh -o BatchMode=yes "$@"
-  fi
+  ssh -F "${SSH_CONFIG_VPS:-$SSH_CONFIG_BUILD}" -o BatchMode=yes "$@"
 }
 
 ssh_build() {
